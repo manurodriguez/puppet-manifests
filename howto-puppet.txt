@@ -1,0 +1,68 @@
+Client:
+
+# rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+# yum install puppet
+# vi /etc/puppet/puppet.conf 
+  [agent]
+  server = puppet-master
+
+# vi /etc/hosts
+  192.168.1.1     puppet-master   puppet
+
+# systemctl start puppet.service
+--> sign cert on the master
+# systemctl stop puppet.service
+
+# puppet agent --noop --verbose
+# puppet agent --test
+
+
+
+Server:
+
+# rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
+# yum install puppet-server
+
+# vi /etc/hosts
+ 192.168.1.2     db1
+
+# vi /etc/puppet/puppet.conf
+  [main]
+    ssldir = $vardir/ssl
+    certname = puppet
+    dns_alt_names = puppet,puppet-master,puppet-master.example.com
+
+
+# systemctl enable puppetmaster.service 
+# systemctl start puppetmaster.service 
+or
+# puppet master --verbose --no-daemonize
+
+# puppet cert list -all
+# puppet cert list
+# puppet cert sign db1
+
+# puppet module install puppetlabs/mysql
+
+# puppet parser validate /path/file.pp
+
+
+Node definitions: 
+  /etc/puppet/manifests/site.pp
+
+Modules:
+  /etc/puppet/modules/MODULE_NAME/manifests/init.pp
+
+Authentication:
+ /etc/puppet/auth.conf
+  path ~ ^/file_(metadata|content)s?/files/
+  auth yes
+  allow /^(.+\.)?example.com$/
+  allow_ip 192.168.1.0/24
+
+Fileserver:
+ /etc/puppet/fileserver.conf
+  [files]
+  path /etc/puppet/modules
+  allow *
+
