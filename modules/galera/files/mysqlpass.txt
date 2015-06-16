@@ -1,7 +1,0 @@
-[client]
-user=root
-password=voila123
-
-[mysql]
-user=root
-password=voila123
