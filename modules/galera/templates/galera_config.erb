@@ -7,7 +7,7 @@ query_cache_type=0
 bind-address=0.0.0.0
 
 # Galera Provider Configuration
-wsrep_provider=/usr/lib/galera/libgalera_smm.so
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
 
 # Galera Cluster Configuration
 wsrep_cluster_name="galera_cluster"
@@ -15,6 +15,7 @@ wsrep_cluster_address="gcomm://<%= first_ip %>,<%= second_ip %>,<%= third_ip %>"
 
 # Galera Synchronization Configuration
 wsrep_sst_method=rsync
+wsrep_sst_auth=galera:galera
 
 # Galera Node Configuration
 wsrep_node_address=<%= @ipaddress_eth1 %>

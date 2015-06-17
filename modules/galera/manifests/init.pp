@@ -50,7 +50,7 @@ file { "/root/.my.cnf":
     source => "puppet:///modules/galera/mysqlpass.txt"
 }
 
-file { '/etc/my.cnf.d/cluster.conf':
+file { '/etc/my.cnf.d/cluster.cnf':
     owner   => root,
     group   => root,
     mode    => 644,
